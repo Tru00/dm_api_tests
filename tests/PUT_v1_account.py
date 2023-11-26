@@ -1,6 +1,6 @@
 import requests
 
-def put_v1_account():
+def put_v1_account_token():
     '''
     Activate registered user
     :return:
