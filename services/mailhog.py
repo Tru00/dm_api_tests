@@ -2,10 +2,11 @@ import json
 import requests
 from requests import session, Response
 from restclient.restclient import Restclient
+from dm_api_account.models.user_details_envelope_model import UserDetailsEnvelopeModel
 
 
 class MailhogApi:
-    def __init__(self, host='http://localhost:5025/'):
+    def __init__(self, host='http://localhost:5025'):
         self.host = host
         self.client = Restclient(host=host)
 
