@@ -72,5 +72,5 @@ class UserDetails(BaseModel):
 
 
 class UserDetailsEnvelopeModel(BaseModel):
-    resource: UserDetails = None
+    resource: Optional[UserDetails] = None
     metadata: Optional[StrictStr] = None

@@ -1,8 +1,10 @@
 import requests
 from requests import Response
-from ..models.login_credentials import LoginCredentials
+from ..models import *
+#from ..models.login_credentials import LoginCredentials
 from requests import session
 from dm_api_account.models.user_envelope_model import UserEnvelopeModel
+from ..utilities import validate_request_json
 
 
 class LoginApi:
@@ -21,7 +23,7 @@ class LoginApi:
 
         response = self.session.post(
             url=f"{self.host}/v1/account/login",
-            json=json,
+            json=validate_request_json(json),
             **kwargs
         )
         UserEnvelopeModel(**response.json())

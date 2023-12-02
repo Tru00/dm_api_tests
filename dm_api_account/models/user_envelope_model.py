@@ -33,5 +33,5 @@ class User(BaseModel):
 
 
 class UserEnvelopeModel(BaseModel):
-    resource: User
+    resource: Optional[User] = None
     metadata: Optional[StrictStr] = None
