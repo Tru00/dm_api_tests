@@ -24,6 +24,7 @@ class AccountApi:
             status_code: int = 200,
             **kwargs
     ) -> Response | UserDetailsEnvelopeModel:
+
         '''
         Get current user
         :return:
@@ -33,9 +34,9 @@ class AccountApi:
             path=f"/v1/account",
             **kwargs
         )
-        validate_status_code(response, status_code)
-        if response.status_code == 200:
-            return UserDetailsEnvelopeModel(**response.json())
+        # validate_status_code(response, status_code)
+        # if response.status_code == 200:
+        #     return UserDetailsEnvelopeModel(**response.json())
         return response
 
     def post_v1_account(
@@ -56,9 +57,9 @@ class AccountApi:
             json=validate_request_json(json),
             **kwargs
         )
-        validate_status_code(response, status_code)
-        if response.status_code == 201:
-            return UserEnvelopeModel(**response.json())
+        # validate_status_code(response, status_code)
+        # if response.status_code == 201:
+        #     return UserEnvelopeModel(**response.json())
         return response
 
     def post_v1_account_password(

@@ -1,3 +1,5 @@
+import datetime
+from datetime import datetime
 from enum import Enum
 from typing import List, Optional
 
@@ -26,10 +28,10 @@ class User(BaseModel):
     small_picture_url: Optional[StrictStr] = Field(alias='smallPictureUrl', default=None)
     status: Optional[StrictStr] = None
     rating: Rating
-    online: Optional[condate] = None
+    online: Optional[datetime] = Field(None)
     name: Optional[StrictStr] = None
     location: Optional[StrictStr] = None
-    registration: Optional[condate] = None
+    registration: Optional[datetime] = Field(None)
 
 
 class UserEnvelopeModel(BaseModel):
