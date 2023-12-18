@@ -1,7 +1,15 @@
 import json
 import time
+
+import structlog
 from requests import session, Response
 from restclient.restclient import Restclient
+
+structlog.configure(
+    processors=[
+        structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
+    ]
+)  # make a log
 
 
 def decorator(fn):
@@ -9,7 +17,7 @@ def decorator(fn):
         for i in range(5):
             response = fn(*arg, **kwargs)
             emails = response.json()['items']
-            if len(emails) < 5:
+            if len(emails) < 1:
                 print(f'attempt {i}')
                 continue
             else:
@@ -52,16 +60,22 @@ class MailhogApi:
     def get_token_by_login(self, login: str, attempt=50):
         if attempt == 0:
             raise AssertionError(f'There is no email with login {login}')
+        time.sleep(2)
         emails = self.get_api_v2_messages(limit=100).json()['items']
         for email in emails:
             user_data = json.loads(email['Content']['Body'])
             if login == user_data.get('Login'):
                 token = user_data['ConfirmationLinkUrl'].split('/')[-1]
-                print(token)
+                print(f'token = {token}')
                 return token
         time.sleep(2)
         return self.get_token_by_login(login=login, attempt=attempt - 1)
 
+    def delete_all_messages(self):
+        response = self.client.delete(path='/api/v1/messages')
+        return response
+
+
 
 if __name__ == '__main__':
-    MailhogApi().get_api_v2_messages(limit=1)
+    MailhogApi().get_token_by_login('login30')
