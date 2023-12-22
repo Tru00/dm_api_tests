@@ -6,3 +6,4 @@ pydantic
 pyhamcrest
 psycopg2
 records
+sqlalchemy==1.4.46
