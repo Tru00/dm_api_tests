@@ -27,10 +27,3 @@ class OrmDatabase:
 
 
 
-    def get_user_by_login2(self):
-        query = select(Users).where(
-            Users.Login == "test30"
-        )
-        dataset = self.db.send_query(query)
-        return dataset
-
