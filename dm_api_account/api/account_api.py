@@ -1,3 +1,4 @@
+import allure
 import requests
 from pydantic import BaseModel
 from requests import Response
@@ -39,6 +40,7 @@ class AccountApi:
         #     return UserDetailsEnvelopeModel(**response.json())
         return response
 
+
     def post_v1_account(
             self,
             json: RegistrationModel,
@@ -52,12 +54,14 @@ class AccountApi:
         :return:
         '''
 
-        response = self.client.post(
-            path=f"/v1/account",
-            json=validate_request_json(json),
-            **kwargs
-        )
-        # validate_status_code(response, status_code)
+        with allure.step('Register a new user'):
+            response = self.client.post(
+                path=f"/v1/account",
+                json=validate_request_json(json),
+                **kwargs
+            )
+
+        validate_status_code(response, status_code)
         # if response.status_code == 201:
         #     return UserEnvelopeModel(**response.json())
         return response
@@ -97,10 +101,11 @@ class AccountApi:
         :return:
         '''
 
-        response = self.client.put(
-            path=f"/v1/account/{token}",
-            **kwargs
-        )
+        with allure.step('User activation'):
+            response = self.client.put(
+                path=f"/v1/account/{token}",
+                **kwargs
+            )
         validate_status_code(response, status_code)
         if response.status_code == 200:
             return UserEnvelopeModel(**response.json())

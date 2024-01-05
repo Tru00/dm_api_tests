@@ -1,6 +1,7 @@
 import pytest
 import structlog
 
+from generic.assertions.post_v1_account import AssertionsPostV1Account
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.mailhog import MailhogApi
 from services.dm_api_account import Facade
@@ -33,16 +34,24 @@ options = (
     'database.dm3_5.host'
 )
 
-
+connect = None
 @pytest.fixture
 def dm_db():
-    db = DmDatabase(
+    global connect
+    if connect is None:      # check if we have connection we do not create a new one
+        connect = DmDatabase(
         user=v.get('database.dm3_5.user'),
         password=v.get('database.dm3_5.password'),
         host=v.get('database.dm3_5.host'),
         database=v.get('database.dm3_5.database'),
     )
-    return db
+    yield connect
+    connect.db.db.close()
+
+
+@pytest.fixture
+def assertions(dm_db):
+    return AssertionsPostV1Account(dm_db)
 
 
 @pytest.fixture(autouse=True)

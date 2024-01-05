@@ -1,3 +1,4 @@
+import allure
 import requests
 from pydantic import BaseModel
 
@@ -9,5 +10,6 @@ def validate_request_json(json: str | BaseModel):
 
 
 def validate_status_code(response: requests.Response, status_code: int):
-    assert response.status_code == status_code, \
-        f'status code must be equal to status_code, but it is {response.status_code}'
+    with allure.step('Validate status code'):
+        assert response.status_code == status_code, \
+            f'status code must be equal to {status_code}, but it is {response.status_code}'
