@@ -1,7 +1,6 @@
 import structlog
-from dm_api_account.models.user_envelope_model import Roles
+from apis.dm_api_account import Roles
 from services.dm_api_account import Facade
-import json
 from hamcrest import assert_that, has_properties # validate incoming json values
 
 structlog.configure(

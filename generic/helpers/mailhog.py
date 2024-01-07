@@ -2,8 +2,8 @@ import json
 import time
 
 import structlog
-from requests import session, Response
-from restclient.restclient import Restclient
+from requests import Response
+from common_libs.restclient.restclient import Restclient
 
 structlog.configure(
     processors=[

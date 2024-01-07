@@ -6,6 +6,7 @@ from collections import namedtuple
 from hamcrest import assert_that, has_entries
 from string import ascii_letters, printable, digits
 import random
+from data.post_v1_account import PostV1AccountData as user_data
 
 
 def random_string():
@@ -23,7 +24,7 @@ class TestsPostV1Account:
     @pytest.fixture
     def prepare_user(self, dm_api_facade, dm_db):
         user = namedtuple('User', 'login, email, password')
-        User = user(login='test30', email="testemail30@test.com", password="123456")
+        User = user(login=user_data.login, email=user_data.email, password=user_data.password)
         dm_db.delete_user_by_login(login=User.login)  # delete user with this login from db
         dataset = dm_db.get_user_by_login(login=User.login)  # check if user is deleted
         assert len(dataset) == 0

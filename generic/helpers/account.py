@@ -1,4 +1,4 @@
-from dm_api_account.models import RegistrationModel
+from apis.dm_api_account.models.registration_model import RegistrationModel
 
 
 class Account:
